@@ -1,0 +1,639 @@
+/* ==========================================================================
+   ymnakatsu (@ymnakatsu) - Astrodynamics & Space Telemetry Specification
+   Light Mode Cosmic Orbit System / Minimal Industrial Flight Deck
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Space+Grotesk:wght@500;700;800&display=swap');
+
+:root {
+  --bg: #f2f5f9;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #e8eef5;
+  
+  --border-strong: #020617;
+  --border-subtle: #cbd5e1;
+  --border-space: rgba(2, 6, 23, 0.07);
+  
+  --text: #020617;
+  --text-muted: #334155;
+  --text-dim: #64748b;
+  
+  /* Space Trajectory Accents */
+  --space-orange: #ff3c00;     /* Rocket Propulsion Safety Orange */
+  --space-blue: #0052ff;       /* Orbital Trajectory Vector Blue */
+  --space-solar: #f59e0b;      /* Photovoltaic Solar Array Gold */
+  --space-cyan: #0284c7;       /* Ion Stream Cyan */
+  
+  --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  
+  --shadow-hard: 4px 4px 0px #020617;
+  --shadow-hard-lg: 6px 6px 0px #020617;
+  
+  --radius: 0px !important;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important;
+}
+
+body {
+  font-family: var(--font-mono);
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  
+  /* Celestial Navigation Graticule & Subtle Star Dots */
+  background-image: 
+    linear-gradient(to right, var(--border-space) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-space) 1px, transparent 1px),
+    radial-gradient(#020617 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px, 120px 120px;
+  background-position: 0 0, 0 0, 20px 20px;
+}
+
+/* ==========================================================================
+   Full-Viewport Precision Orbital Mechanics System (SVG Canvas)
+   ========================================================================== */
+.orbital-system {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.orbital-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+/* Smooth, On-Axis Orbital Rotations (Centered on Planetary Focal Core) */
+.orbit-spin-cw {
+  transform-origin: 0 0;
+  animation: orbitRotateCW 90s linear infinite;
+}
+
+.orbit-spin-ccw {
+  transform-origin: 0 0;
+  animation: orbitRotateCCW 140s linear infinite;
+}
+
+.orbit-spin-slow {
+  transform-origin: 0 0;
+  animation: orbitRotateCW 180s linear infinite;
+}
+
+/* Specific Celestial Body & Satellite Orbital Revolutions */
+.sat-orbit-leo {
+  transform-origin: 0 0;
+  animation: orbitRotateCW 22s linear infinite;
+}
+
+.planet-orbit-meo {
+  transform-origin: 0 0;
+  animation: orbitRotateCCW 65s linear infinite;
+}
+
+.moon-sub-orbit {
+  transform-origin: 0 0;
+  animation: orbitRotateCW 9s linear infinite;
+}
+
+.planet-orbit-outer {
+  transform-origin: 0 0;
+  animation: orbitRotateCW 140s linear infinite;
+}
+
+.sat-orbit-geo {
+  transform-origin: 0 0;
+  animation: orbitRotateCCW 100s linear infinite;
+}
+
+.moon-sub-orbit-reverse {
+  transform-origin: 0 0;
+  animation: orbitRotateCCW 35s linear infinite;
+}
+
+
+
+@keyframes orbitRotateCW {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitRotateCCW {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 2px solid var(--space-orange);
+  transition: all 0.1s ease;
+  font-weight: 700;
+}
+
+a:hover {
+  background-color: var(--space-orange);
+  color: #ffffff;
+  border-bottom-color: var(--space-orange);
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 6.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Top Navigation / System Header
+   ========================================================================== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  margin-bottom: 3.5rem;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-strong);
+  box-shadow: var(--shadow-hard);
+  position: relative;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface-elevated);
+  color: var(--text);
+  border: 2px solid var(--border-strong);
+  padding: 0.45rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  transition: all 0.1s ease;
+  border-bottom: 2px solid var(--border-strong) !important;
+}
+
+.lang-switch:hover {
+  background: var(--space-orange);
+  color: #ffffff;
+  border-color: var(--border-strong);
+  transform: translate(1px, 1px);
+}
+
+.github-link {
+  display: inline-block;
+  background: var(--border-strong);
+  color: #ffffff !important;
+  border: 2px solid var(--border-strong);
+  padding: 0.45rem 1.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  transition: all 0.1s ease;
+  border-bottom: 2px solid var(--border-strong) !important;
+}
+
+.github-link:hover {
+  background: var(--space-blue) !important;
+  border-color: var(--border-strong) !important;
+  color: #ffffff !important;
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   Profile Hero - Chief Architect Dossier
+   ========================================================================== */
+.profile-hero {
+  margin-bottom: 4rem;
+  border: 2px solid var(--border-strong);
+  background: var(--bg-surface);
+  padding: 2.75rem;
+  position: relative;
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.profile-row {
+  margin-bottom: 1.5rem;
+}
+
+.profile-name {
+  font-family: var(--font-display);
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.profile-handle {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  color: var(--space-blue);
+  letter-spacing: 0.06em;
+}
+
+.profile-handle a {
+  border-bottom: 2px solid var(--space-blue);
+}
+
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+}
+
+.role-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #000000;
+  background: var(--space-solar);
+  border: 2px solid var(--border-strong);
+  padding: 0.35rem 0.85rem;
+  box-shadow: 2px 2px 0px var(--border-strong);
+}
+
+.meta-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--bg-surface-elevated);
+  border: 1.5px solid var(--border-strong);
+  padding: 0.35rem 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.bio {
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.95;
+  border-top: 2px solid var(--border-strong);
+  padding-top: 1.5rem;
+  font-weight: 500;
+  position: relative;
+}
+
+/* ==========================================================================
+   Sections & Sharp Architectural H2 Headers
+   ========================================================================== */
+.section {
+  margin-bottom: 4.5rem;
+}
+
+/* Clean, sharp, unpretentious Section Header */
+.section-title-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border-strong);
+  position: relative;
+}
+
+.section-title-wrap::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: var(--space-orange);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--space-blue);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-strong);
+  padding: 0.15rem 0.5rem;
+  letter-spacing: 0.12em;
+}
+
+.section-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Projects Grid - Spacecraft Payload Modules */
+.projects-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.project-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-strong);
+  padding: 2.25rem;
+  position: relative;
+  box-shadow: var(--shadow-hard);
+  transition: all 0.12s ease;
+}
+
+.project-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard-lg);
+  border-color: var(--border-strong);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+  border-bottom: 1.5px dashed var(--border-subtle);
+  padding-bottom: 1.25rem;
+}
+
+.project-name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.project-type {
+  font-size: 0.78rem;
+  color: var(--space-blue);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  display: block;
+  margin-top: 0.3rem;
+}
+
+.pill {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #000000;
+  border: 2px solid var(--border-strong);
+  padding: 0.3rem 0.75rem;
+  background: var(--space-solar);
+  box-shadow: 2px 2px 0px #000000;
+}
+
+.project-desc {
+  font-size: 0.96rem;
+  color: var(--text);
+  line-height: 1.9;
+  margin-bottom: 1.75rem;
+  font-weight: 500;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-top: 2px solid var(--border-strong);
+  padding-top: 1.25rem;
+}
+
+.tech-tag {
+  background: var(--bg-surface-elevated);
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.35rem 0.75rem;
+  border: 1.5px solid var(--border-strong);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: all 0.1s ease;
+}
+
+.tech-tag:hover {
+  background: var(--space-blue);
+  color: #ffffff;
+  border-color: var(--border-strong);
+}
+
+/* Tech Grid - Avionics Subsystem Rack */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.tech-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-strong);
+  padding: 1.75rem;
+  position: relative;
+  box-shadow: var(--shadow-hard);
+  transition: all 0.12s ease;
+}
+
+.tech-card:hover {
+  transform: translate(-1px, -1px);
+}
+
+.tech-card.span-full {
+  grid-column: 1 / -1;
+}
+
+.tech-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border-strong);
+}
+
+.tech-card-header h3 {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  flex-grow: 1;
+}
+
+.tech-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.tech-card li {
+  font-size: 0.92rem;
+  color: var(--text);
+  display: flex;
+  align-items: baseline;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.tech-card li::before {
+  content: "―";
+  color: var(--space-blue);
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-right: 0.65rem;
+  flex-shrink: 0;
+}
+
+.tech-card li strong {
+  color: var(--text);
+  font-weight: 800;
+}
+
+.tech-card ul.columns-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 1.5rem;
+}
+
+/* Footer - Minimal System Sign-off */
+.footer {
+  margin-top: 5rem;
+  padding: 2.5rem 0;
+  border-top: 2px solid var(--border-strong);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  position: relative;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-content a {
+  border-bottom: 2px solid var(--border-strong);
+  color: var(--text);
+}
+
+.footer-content a:hover {
+  background: var(--space-orange);
+  color: #ffffff;
+  border-color: var(--space-orange);
+}
+
+.footer-note {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding: 2rem 1rem 4rem;
+  }
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+  .tech-card ul.columns-2 {
+    grid-template-columns: 1fr;
+  }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem 1rem;
+  }
+  .header-actions {
+    width: 100%;
+  }
+  .profile-hero {
+    padding: 1.75rem 1.25rem;
+  }
+  .profile-name {
+    font-size: 2.25rem;
+  }
+  .section-title-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+  .section-title {
+    font-size: 1.25rem;
+  }
+  .footer-content {
+    flex-direction: column;
+    text-align: left;
+  }
+}

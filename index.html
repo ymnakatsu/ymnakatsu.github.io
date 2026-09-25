@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ymnakatsu (@ymnakatsu) - Software Architect</title>
+  <meta name="description" content="ymnakatsu (@ymnakatsu) の技術ポートフォリオ。ソフトウェアアーキテクトとしての関心領域、個人開発プロダクト、よく使う技術スタックのまとめ。">
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/42318484?v=4">
+  <link rel="apple-touch-icon" href="https://avatars.githubusercontent.com/u/42318484?v=4">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Precision Orbital Mechanics & Ephemeris Background Layer -->
+  <div class="orbital-system" aria-hidden="true">
+    <svg class="orbital-canvas" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Gradients for subtle orbital traces -->
+        <linearGradient id="orbGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0052ff" stop-opacity="0.35"/>
+          <stop offset="50%" stop-color="#0052ff" stop-opacity="0.08"/>
+          <stop offset="100%" stop-color="#ff3c00" stop-opacity="0.25"/>
+        </linearGradient>
+        <linearGradient id="orbGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#020617" stop-opacity="0.22"/>
+          <stop offset="70%" stop-color="#020617" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="#0052ff" stop-opacity="0.18"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Minimal Quiet Astrometric Star Field (Subtle pinprick dots only) -->
+      <g class="stellar-field">
+        <circle cx="280" cy="160" r="1.5" fill="#0052ff" fill-opacity="0.5"/>
+        <circle cx="680" cy="110" r="1" fill="#020617" fill-opacity="0.3"/>
+        <circle cx="190" cy="680" r="1.5" fill="#ff3c00" fill-opacity="0.5"/>
+        <circle cx="860" cy="920" r="1.5" fill="#f59e0b" fill-opacity="0.5"/>
+        <circle cx="1450" cy="780" r="1.5" fill="#0052ff" fill-opacity="0.4"/>
+      </g>
+
+      <!-- Center Planet & Solar Anchor (Off-center top-right for elegant balance) -->
+      <g transform="translate(1180, 260)">
+        <!-- Planetary Reference Rings & Cardinal Vectors (Static Core) -->
+        <circle r="60" stroke="#020617" stroke-width="1.5" stroke-opacity="0.25" stroke-dasharray="2 3"/>
+        <circle r="62" stroke="#0052ff" stroke-width="0.75" stroke-opacity="0.3"/>
+        
+        <!-- Central Primary Focal Star: Minimal Clean Geometry -->
+        <circle r="6" fill="#ffffff" stroke="#0052ff" stroke-width="1.5"/>
+        <circle r="2" fill="#020617"/>
+        <line x1="-16" y1="0" x2="16" y2="0" stroke="#0052ff" stroke-width="0.75" stroke-opacity="0.35"/>
+        <line x1="0" y1="-16" x2="0" y2="16" stroke="#0052ff" stroke-width="0.75" stroke-opacity="0.35"/>
+
+        <!-- Cardinal Crosshair Rays -->
+        <line x1="-800" y1="0" x2="800" y2="0" stroke="#020617" stroke-width="0.75" stroke-opacity="0.06" stroke-dasharray="6 6"/>
+        <line x1="0" y1="-500" x2="0" y2="800" stroke="#020617" stroke-width="0.75" stroke-opacity="0.06" stroke-dasharray="6 6"/>
+
+        <!-- Orbiting Fast LEO Satellite (Autonomous Fast Orbit) -->
+        <g class="sat-orbit-leo">
+          <g transform="translate(180, 0)">
+            <!-- Satellite Chassis & Solar Panels -->
+            <rect x="-3" y="-3" width="6" height="6" fill="#020617" stroke="#0052ff" stroke-width="0.75"/>
+            <line x1="-9" y1="0" x2="-3" y2="0" stroke="#0052ff" stroke-width="1.5"/>
+            <line x1="3" y1="0" x2="9" y2="0" stroke="#0052ff" stroke-width="1.5"/>
+            <!-- Direction Vector -->
+            <line x1="0" y1="0" x2="0" y2="-14" stroke="#ff3c00" stroke-width="1" stroke-opacity="0.6" stroke-dasharray="2 2"/>
+          </g>
+        </g>
+
+        <!-- Orbiting Medium Planet with Moon (MEO Orbit) -->
+        <g class="planet-orbit-meo">
+          <g transform="translate(340, 0)">
+            <!-- Terrestrial Planet Body (Clean Minimal Vector) -->
+            <circle r="5" fill="#0052ff" stroke="#020617" stroke-width="1"/>
+            
+            <!-- Moon Sub-Orbit Path -->
+            <circle r="16" stroke="#020617" stroke-width="0.5" stroke-opacity="0.15" stroke-dasharray="2 2" fill="none"/>
+            
+            <!-- Natural Satellite / Moon Orbiting the Planet -->
+            <g class="moon-sub-orbit">
+              <circle cx="16" cy="0" r="1.8" fill="#f59e0b"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- Orbiting Ringed Gas Giant Planet (Outer Orbit) -->
+        <g class="planet-orbit-outer">
+          <g transform="translate(0, 490)">
+            <!-- Planet Core -->
+            <circle r="6" fill="#020617"/>
+            <!-- Single Elegant Planetary Ring -->
+            <ellipse cx="0" cy="0" rx="15" ry="4" fill="none" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.8" transform="rotate(-24)"/>
+            <!-- Outer Shepherd Moon -->
+            <circle cx="20" cy="0" r="1.5" fill="#0052ff"/>
+          </g>
+        </g>
+
+        <!-- Orbiting Large GEO Satellite Platform (Geostationary Ring) -->
+        <g class="sat-orbit-geo">
+          <g transform="translate(-480, -480)">
+            <!-- Large Communication Satellite Platform -->
+            <rect x="-4" y="-4" width="8" height="8" fill="#ffffff" stroke="#020617" stroke-width="1.5"/>
+            <!-- Solar Array Wings -->
+            <rect x="-18" y="-2" width="10" height="4" fill="#0052ff" fill-opacity="0.4" stroke="#020617" stroke-width="0.75"/>
+            <rect x="8" y="-2" width="10" height="4" fill="#0052ff" fill-opacity="0.4" stroke="#020617" stroke-width="0.75"/>
+            <!-- High-Gain Antenna Dish -->
+            <circle cx="0" cy="6" r="3" stroke="#ff3c00" stroke-width="1" fill="none"/>
+          </g>
+        </g>
+
+        <!-- Rotating Orbital Shells & Kepler Ellipse 1 (Clockwise System Drift) -->
+        <g class="orbit-spin-cw">
+          <!-- Low Orbit (LEO) Trace -->
+          <circle r="180" stroke="#020617" stroke-width="1" stroke-opacity="0.12" stroke-dasharray="4 6"/>
+          
+          <!-- Medium Orbit (MEO) Trace -->
+          <circle r="340" stroke="#0052ff" stroke-width="1.25" stroke-opacity="0.15"/>
+          
+          <!-- Polar Drift Orbit Trace -->
+          <circle r="490" stroke="#020617" stroke-width="1" stroke-opacity="0.1" stroke-dasharray="12 4 2 4"/>
+
+          <!-- Geostationary Ring (GEO) Trace -->
+          <circle r="680" stroke="#020617" stroke-width="1.5" stroke-opacity="0.15" stroke-dasharray="3 5"/>
+
+          <!-- Eccentric Keplerian Ellipse 1 (Transfer Orbit) -->
+          <g transform="rotate(-32)">
+            <ellipse cx="-160" cy="0" rx="460" ry="240" stroke="url(#orbGrad1)" stroke-width="1.5" stroke-dasharray="8 4"/>
+            <line x1="-620" y1="0" x2="300" y2="0" stroke="#ff3c00" stroke-width="0.75" stroke-opacity="0.2" stroke-dasharray="2 4"/>
+            <line x1="300" y1="-12" x2="300" y2="12" stroke="#ff3c00" stroke-width="1.5" stroke-opacity="0.6"/>
+            <line x1="-620" y1="-12" x2="-620" y2="12" stroke="#0052ff" stroke-width="1.5" stroke-opacity="0.6"/>
+            
+            <!-- Interplanetary Deep Space Probe on Elliptical Path -->
+            <g transform="translate(210, -178)">
+              <circle r="4" fill="#ff3c00" stroke="#020617" stroke-width="1"/>
+              <line x1="-6" y1="-6" x2="6" y2="6" stroke="#020617" stroke-width="0.75"/>
+              <line x1="-6" y1="6" x2="6" y2="-6" stroke="#020617" stroke-width="0.75"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- Rotating High-Inclination Orbits (Counter-Clockwise System Drift) -->
+        <g class="orbit-spin-ccw">
+          <!-- Eccentric Keplerian Ellipse 2 -->
+          <g transform="rotate(48)">
+            <ellipse cx="-220" cy="0" rx="640" ry="310" stroke="url(#orbGrad2)" stroke-width="1.5" stroke-dasharray="14 6 3 6"/>
+            <!-- Secondary Probe Node -->
+            <g transform="translate(340, 0)">
+              <rect x="-3" y="-3" width="6" height="6" fill="#020617" stroke="#ff3c00" stroke-width="1"/>
+              <line x1="0" y1="-3" x2="0" y2="-10" stroke="#020617" stroke-width="0.75"/>
+            </g>
+            <!-- Orbit Trajectory Ticks -->
+            <line x1="420" y1="-10" x2="420" y2="10" stroke="#020617" stroke-width="1" stroke-opacity="0.3"/>
+            <line x1="380" y1="-8" x2="380" y2="8" stroke="#020617" stroke-width="0.75" stroke-opacity="0.2"/>
+            <line x1="340" y1="-6" x2="340" y2="6" stroke="#020617" stroke-width="0.75" stroke-opacity="0.2"/>
+          </g>
+
+          <!-- Secondary Retrograde Counter-Orbit Arc -->
+          <g transform="rotate(115)">
+            <ellipse cx="80" cy="0" rx="520" ry="290" stroke="#020617" stroke-width="1" stroke-opacity="0.09" stroke-dasharray="1 4"/>
+          </g>
+
+          <!-- Radial Angle Graticule Ticks -->
+          <g stroke="#020617" stroke-width="1" stroke-opacity="0.2">
+            <line x1="680" y1="0" x2="700" y2="0" />
+            <line x1="0" y1="680" x2="0" y2="700" />
+            <line x1="-680" y1="0" x2="-700" y2="0" />
+            <line x1="0" y1="-680" x2="0" y2="-700" />
+          </g>
+        </g>
+      </g>
+
+      <!-- Bottom-Left Secondary Planetary Orbit System -->
+      <g transform="translate(120, 1050)">
+        <circle r="40" stroke="#020617" stroke-width="1" stroke-opacity="0.12" stroke-dasharray="2 3"/>
+        <circle r="5" fill="#0284c7"/>
+        <circle r="220" stroke="#0052ff" stroke-width="1" stroke-opacity="0.08" stroke-dasharray="6 6"/>
+        <circle r="410" stroke="#020617" stroke-width="1.25" stroke-opacity="0.06" stroke-dasharray="4 8"/>
+        
+        <!-- Satellite orbiting secondary planet -->
+        <g class="moon-sub-orbit-reverse">
+          <circle cx="110" cy="0" r="2" fill="#ff3c00"/>
+        </g>
+
+        <g class="orbit-spin-slow">
+          <ellipse cx="60" cy="0" rx="380" ry="190" stroke="#020617" stroke-width="1.2" stroke-opacity="0.12" stroke-dasharray="8 4"/>
+          <line x1="-320" y1="0" x2="440" y2="0" stroke="#020617" stroke-width="0.5" stroke-opacity="0.1" stroke-dasharray="3 3"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="container">
+    <!-- Top Navigation / Header -->
+    <header class="header">
+      <div class="header-left">
+        <span class="header-label">Portfolio & Tech Stack</span>
+      </div>
+      <div class="header-actions">
+        <a href="en.html" class="lang-switch" aria-label="Switch to English">EN</a>
+        <a href="https://github.com/ymnakatsu" target="_blank" rel="noopener noreferrer" class="github-link" aria-label="GitHub @ymnakatsu">
+          github.com/ymnakatsu
+        </a>
+      </div>
+    </header>
+
+    <main>
+      <!-- Profile Header Section -->
+      <section class="profile-hero">
+        <div class="profile-row">
+          <div>
+            <h1 class="profile-name">ymnakatsu</h1>
+            <p class="profile-handle"><a href="https://github.com/ymnakatsu" target="_blank" rel="noopener noreferrer">@ymnakatsu</a></p>
+          </div>
+        </div>
+
+        <div class="profile-meta">
+          <span class="role-badge">Software Architect</span>
+          <span class="meta-badge">ITエンジニア (2012年〜)</span>
+          <span class="meta-badge">Hyogo, Japan</span>
+        </div>
+        <p class="bio">
+          本業はソフトウェアアーキテクトです。業務ではシステムのアーキテクチャ設計、ドメインモデリング、基盤の設計・コードレビュー、インフラ構築・管理などを担当しています。
+        </p>
+      </section>
+
+      <!-- Products Section -->
+      <section class="section">
+        <div class="section-title-wrap">
+          <h2 class="section-title"><span class="section-num">01</span>Personal Projects</h2>
+        </div>
+
+        <div class="projects-grid">
+          <!-- Entitia -->
+          <article class="project-card">
+            <div class="project-header">
+              <div>
+                <h3 class="project-name">Entitia</h3>
+                <span class="project-type">Desktop & AI Modeling Tool</span>
+              </div>
+              <span class="pill">Tauri v2 / Rust</span>
+            </div>
+            <p class="project-desc">
+              AIエージェント協調型のUMLモデリング環境。モデルの描画、高解像度画像出力、Model Context Protocol (MCP) を通じた外部AIエージェントからの直接グラフ操作を提供。
+            </p>
+            <div class="tag-row">
+              <span class="tech-tag">Tauri v2</span>
+              <span class="tech-tag">Rust</span>
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">MCP</span>
+            </div>
+          </article>
+
+          <!-- Orisei -->
+          <article class="project-card">
+            <div class="project-header">
+              <div>
+                <h3 class="project-name">Orisei</h3>
+                <span class="project-type">Backend & Geospatial Platform</span>
+              </div>
+              <span class="pill">Backend Focus</span>
+            </div>
+            <p class="project-desc">
+              地図・位置情報とコンテンツ解析を組み合わせたWebプラットフォーム。自身はバックエンドを中心に担当し、Stripeを用いた決済基盤（Connect・Webhook・サブスクリプション）の設計や、自動マッピング機能の実装に注力。
+            </p>
+            <div class="tag-row">
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">Stripe</span>
+              <span class="tech-tag">AWS Bedrock</span>
+              <span class="tech-tag">AWS Location</span>
+              <span class="tech-tag">PostgreSQL</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Tech Stack Section -->
+      <section class="section">
+        <div class="section-title-wrap">
+          <h2 class="section-title"><span class="section-num">02</span>Tech Stack</h2>
+        </div>
+
+        <div class="tech-grid">
+          <!-- Languages -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <h3>Languages</h3>
+            </div>
+            <ul>
+              <li><strong>Java</strong></li>
+              <li><strong>TypeScript</strong> / JavaScript</li>
+              <li><strong>Rust</strong></li>
+              <li><strong>Go</strong></li>
+              <li><strong>SQL</strong></li>
+            </ul>
+          </div>
+
+          <!-- Backend & Architecture -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <h3>Backend & Architecture</h3>
+            </div>
+            <ul>
+              <li><strong>Spring Boot</strong></li>
+              <li><strong>NestJS</strong></li>
+              <li><strong>Prisma</strong></li>
+              <li><strong>ワークフローエンジン / ステートマシン設計</strong></li>
+              <li><strong>GraalVM</strong> Native Image</li>
+              <li><strong>Flyway</strong></li>
+              <li><strong>ArchUnit</strong></li>
+              <li><strong>OpenAPI</strong></li>
+            </ul>
+          </div>
+
+          <!-- Data, Cloud & Tools -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <h3>Data, Cloud & Tools</h3>
+            </div>
+            <ul>
+              <li><strong>PostgreSQL</strong></li>
+              <li><strong>SQLServer</strong></li>
+              <li><strong>AWS</strong></li>
+              <li><strong>Docker</strong></li>
+            </ul>
+          </div>
+
+          <!-- Desktop & Frontend -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <h3>Desktop & Frontend</h3>
+            </div>
+            <ul>
+              <li><strong>Tauri</strong> <span class="sub">(v2)</span></li>
+              <li><strong>Next.js</strong></li>
+              <li>HTML / CSS / TypeScript</li>
+              <li>Tailwind CSS</li>
+            </ul>
+          </div>
+
+          <!-- Protocols & Integrations -->
+          <div class="tech-card span-full">
+            <div class="tech-card-header">
+              <h3>Protocols & Integrations</h3>
+            </div>
+            <ul class="columns-2">
+              <li><strong>Model Context Protocol (MCP)</strong></li>
+              <li><strong>Stripe</strong></li>
+              <li><strong>LLM</strong> (AWS Bedrock Claude Antigravity)</li>
+              <li><strong>WebSocket</strong> (Tomcat NIO)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Clean Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>© 2026 ymnakatsu (<a href="https://github.com/ymnakatsu" target="_blank" rel="noopener noreferrer">@ymnakatsu</a>). Hosted on GitHub Pages.</p>
+        <p class="footer-note">All corporate and private specifics are strictly anonymized.</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
